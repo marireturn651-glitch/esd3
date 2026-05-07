@@ -1,0 +1,875 @@
+cat > /mnt/user-data/outputs/cdac_esd_exam_v2.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CDAC ESD Mock Exam Portal 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080c14;--s1:#0e1421;--s2:#141c2e;--s3:#1a2438;
+  --b1:#1e2d47;--b2:#243352;--border:#2a3f5f;--border2:#3a5070;
+  --acc:#4f9eff;--acc2:#2d7de8;--grn:#2ecc71;--grn2:#27ae60;
+  --red:#e74c3c;--red2:#c0392b;--ylw:#f1c40f;--pur:#9b59b6;--org:#e67e22;
+  --txt:#e8f0fe;--txt2:#a8bcd8;--txt3:#6b8aaa;
+  --ec:#4f9eff;--dsa:#2ecc71;--os:#f1c40f;--mcu:#9b59b6;
+  --r:8px;--r2:12px;--r3:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden}
+
+/* ─── UTILITY ─── */
+.hidden{display:none!important}
+.flex{display:flex}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap1{gap:.5rem}.gap2{gap:1rem}.gap3{gap:1.5rem}.wrap{flex-wrap:wrap}
+.w100{width:100%}.text-center{text-align:center}.bold{font-weight:700}
+.muted{color:var(--txt2)}.dimmed{color:var(--txt3)}
+.tag{padding:.2rem .7rem;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--s1)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* ══════════════ SCREEN SYSTEM ══════════════ */
+.screen{display:none;min-height:100vh}
+.screen.active{display:flex}
+
+/* ══════════════ LANDING ══════════════ */
+#s-land{flex-direction:column;align-items:center;justify-content:center;padding:2rem;min-height:100vh;background:radial-gradient(ellipse at 30% 20%,#0a1a3a 0%,var(--bg) 60%)}
+.brand{text-align:center;margin-bottom:2.5rem}
+.brand-logo{font-size:3.2rem;font-weight:800;letter-spacing:6px;background:linear-gradient(135deg,var(--acc),#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.brand-sub{font-size:.8rem;color:var(--txt3);letter-spacing:3px;margin-top:.4rem;text-transform:uppercase}
+.brand-bar{width:60px;height:3px;background:linear-gradient(90deg,var(--acc),#a78bfa);border-radius:2px;margin:.8rem auto 0}
+
+.form-card{background:var(--s1);border:1px solid var(--border);border-radius:var(--r3);padding:2.5rem;width:100%;max-width:460px;position:relative;overflow:hidden}
+.form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--acc),#a78bfa,var(--grn))}
+.form-card h2{font-size:1.2rem;font-weight:700;margin-bottom:1.8rem}
+.field{margin-bottom:1.3rem}
+.field label{display:block;font-size:.75rem;font-weight:600;color:var(--txt3);margin-bottom:.5rem;letter-spacing:.8px;text-transform:uppercase}
+.field input,.field select{width:100%;background:var(--s2);border:1.5px solid var(--border);border-radius:var(--r);padding:.75rem 1rem;color:var(--txt);font-family:'Outfit',sans-serif;font-size:.95rem;outline:none;transition:border-color .2s,box-shadow .2s}
+.field input:focus,.field select:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(79,158,255,.12)}
+.field select option{background:var(--s2)}
+
+.btn-primary{width:100%;padding:.9rem;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;border:none;border-radius:var(--r);cursor:pointer;transition:opacity .2s,transform .1s;letter-spacing:.3px}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-primary:active{transform:translateY(0)}
+
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;width:100%;max-width:460px;margin-top:1.5rem}
+.kpi{background:var(--s1);border:1px solid var(--border);border-radius:var(--r2);padding:1rem;text-align:center}
+.kpi-val{font-size:1.8rem;font-weight:800;color:var(--acc);line-height:1}
+.kpi-lbl{font-size:.68rem;color:var(--txt3);margin-top:.2rem;text-transform:uppercase;letter-spacing:.5px}
+
+/* ══════════════ INSTRUCTIONS ══════════════ */
+#s-instr{flex-direction:column;align-items:center;justify-content:center;padding:2rem;background:var(--bg)}
+.instr-card{background:var(--s1);border:1px solid var(--border);border-radius:var(--r3);padding:2.5rem;width:100%;max-width:540px;position:relative}
+.instr-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--grn),var(--acc))}
+.instr-card h2{font-size:1.4rem;font-weight:800;margin-bottom:1.5rem;color:var(--acc)}
+.instr-item{display:flex;align-items:flex-start;gap:.9rem;margin-bottom:1rem;font-size:.9rem;line-height:1.5}
+.instr-icon{font-size:1.1rem;flex-shrink:0;margin-top:.05rem}
+.instr-item em{color:var(--ylw);font-style:normal;font-weight:700}
+.btn-go{margin-top:1.8rem;width:100%;padding:.9rem;background:linear-gradient(135deg,var(--grn),var(--grn2));color:#fff;font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:800;border:none;border-radius:var(--r);cursor:pointer;transition:opacity .2s,transform .1s}
+.btn-go:hover{opacity:.9;transform:translateY(-1px)}
+
+/* ══════════════ EXAM ══════════════ */
+#s-exam{display:none;height:100vh;overflow:hidden}
+#s-exam.active{display:grid;grid-template-columns:1fr 300px}
+
+.exam-left{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+
+/* Top bar */
+.topbar{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.5rem;background:var(--s1);border-bottom:1px solid var(--border)}
+.topbar-left{display:flex;align-items:center;gap:1rem}
+.q-num{font-size:.85rem;color:var(--txt2)}
+.q-num strong{color:var(--txt);font-size:1rem}
+.mod-badge{padding:.22rem .65rem;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.5px}
+.topbar-right{display:flex;align-items:center;gap:1.2rem}
+.score-live{font-size:.85rem;color:var(--txt2)}
+.score-live strong{color:var(--acc);font-size:1rem}
+.timer{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:600;color:var(--grn);min-width:70px;text-align:right}
+.timer.warn{color:var(--ylw)}
+.timer.danger{color:var(--red);animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* Question body */
+.q-body{flex:1;overflow-y:auto;padding:1.8rem 2rem}
+.q-header{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem}
+.q-badge{font-size:.72rem;font-weight:700;padding:.2rem .6rem;border-radius:5px;background:var(--b1);border:1px solid var(--border);color:var(--txt3)}
+.q-text{font-size:1rem;line-height:1.75;color:var(--txt);margin-bottom:1.2rem;font-weight:500}
+pre.code{background:#050a12;border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.2rem;font-family:'JetBrains Mono',monospace;font-size:.8rem;line-height:1.7;margin-bottom:1.2rem;overflow-x:auto;border-left:3px solid var(--acc)}
+.kw{color:#79b8ff}.str{color:#9ecbff}.num{color:#79dcaa}.cmt{color:#586069;font-style:italic}.pp{color:#b392f0}.fn{color:#b392f0}
+.opts{display:grid;gap:.65rem;margin-bottom:1rem}
+.opt{display:flex;align-items:center;gap:.9rem;background:var(--s2);border:1.5px solid var(--border);border-radius:var(--r2);padding:.85rem 1.1rem;cursor:pointer;transition:all .15s;font-size:.9rem;color:var(--txt)}
+.opt:hover:not(.disabled){border-color:var(--acc);background:var(--b1);transform:translateX(3px)}
+.opt.disabled{cursor:default}
+.opt.correct{border-color:var(--grn)!important;background:rgba(46,204,113,.1)!important;color:var(--grn)!important}
+.opt.wrong{border-color:var(--red)!important;background:rgba(231,76,60,.1)!important;color:var(--red)!important}
+.opt.reveal{border-color:var(--grn)!important;background:rgba(46,204,113,.06)!important}
+.opt-circle{width:28px;height:28px;min-width:28px;border-radius:50%;background:var(--b1);border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;transition:all .15s}
+.opt.correct .opt-circle{background:var(--grn);border-color:var(--grn);color:#000}
+.opt.wrong .opt-circle{background:var(--red);border-color:var(--red);color:#fff}
+.opt.reveal .opt-circle{background:var(--grn);border-color:var(--grn);color:#000}
+.explanation{background:rgba(79,158,255,.07);border-left:3px solid var(--acc);padding:1rem 1.2rem;border-radius:0 var(--r) var(--r) 0;font-size:.85rem;line-height:1.6;margin-top:.5rem}
+.exp-title{font-size:.72rem;font-weight:700;color:var(--acc);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.5px}
+
+/* Bottom nav */
+.exam-nav{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.8rem 1.2rem;background:var(--s1);border-top:1px solid var(--border)}
+.nav-group{display:flex;gap:.5rem}
+.btn-nav{padding:.5rem 1rem;border-radius:var(--r);border:1px solid var(--border);background:var(--s2);color:var(--txt2);cursor:pointer;font-family:'Outfit',sans-serif;font-size:.82rem;font-weight:600;transition:all .15s}
+.btn-nav:hover{border-color:var(--acc);color:var(--acc)}
+.btn-nav.accent{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;border:none}
+.btn-nav.accent:hover{opacity:.88}
+.btn-nav.danger{background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;border:none}
+.btn-nav.danger:hover{opacity:.88}
+.btn-nav.skip{border-color:var(--ylw);color:var(--ylw)}
+.btn-nav.skip:hover{background:rgba(241,196,15,.1)}
+
+/* ══════════════ SIDEBAR ══════════════ */
+.sidebar{background:var(--s1);border-left:1px solid var(--border);display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.sb-section{padding:.9rem;border-bottom:1px solid var(--border);flex-shrink:0}
+.sb-title{font-size:.7rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:.7rem}
+.mod-filter{display:flex;gap:.3rem;flex-wrap:wrap}
+.mf-btn{padding:.22rem .55rem;border-radius:5px;font-size:.7rem;font-weight:700;cursor:pointer;border:1.5px solid transparent;transition:all .15s;background:transparent}
+.mf-btn.active{background:rgba(255,255,255,.08)}
+.mf-btn[data-m="ALL"]{color:var(--txt2);border-color:var(--border2)}
+.mf-btn[data-m="EC"]{color:var(--ec);border-color:var(--ec)}
+.mf-btn[data-m="DSA"]{color:var(--dsa);border-color:var(--dsa)}
+.mf-btn[data-m="OS"]{color:var(--os);border-color:var(--os)}
+.mf-btn[data-m="MCU"]{color:var(--mcu);border-color:var(--mcu)}
+.prog-rows{margin-top:.7rem;display:flex;flex-direction:column;gap:.4rem}
+.pr{display:flex;align-items:center;gap:.5rem}
+.pr-lbl{font-size:.68rem;font-weight:700;width:30px;flex-shrink:0}
+.pr-bar{flex:1;height:5px;background:var(--s3);border-radius:3px;overflow:hidden}
+.pr-fill{height:100%;border-radius:3px;transition:width .4s}
+.pr-num{font-size:.65rem;color:var(--txt3);width:32px;text-align:right;flex-shrink:0}
+.dot-grid{flex:1;overflow-y:auto;padding:.8rem;display:grid;grid-template-columns:repeat(8,1fr);gap:.3rem;align-content:start}
+.dot{width:26px;height:26px;border-radius:5px;border:1.5px solid var(--border);background:var(--s2);font-size:.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--txt3);transition:all .12s;font-weight:600}
+.dot:hover{border-color:var(--acc)}
+.dot.cur{border-color:var(--acc)!important;color:var(--acc)!important;background:var(--b1)!important}
+.dot.ok{background:var(--grn)!important;border-color:var(--grn)!important;color:#000!important}
+.dot.ng{background:var(--red)!important;border-color:var(--red)!important;color:#fff!important}
+.dot.sk{background:var(--ylw)!important;border-color:var(--ylw)!important;color:#000!important}
+.dot.hide{display:none}
+.sb-legend{padding:.6rem .9rem;border-top:1px solid var(--border);flex-shrink:0;display:flex;gap:.8rem;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:.3rem;font-size:.65rem;color:var(--txt3)}
+.leg-sq{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+
+/* ══════════════ RESULT ══════════════ */
+#s-result{flex-direction:column;overflow-y:auto;padding:2rem;background:var(--bg);min-height:100vh}
+.result-inner{max-width:680px;margin:0 auto;width:100%}
+.res-hero{background:var(--s1);border:1px solid var(--border);border-radius:var(--r3);padding:2.5rem 2rem;text-align:center;margin-bottom:1.2rem;position:relative;overflow:hidden}
+.res-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--acc),var(--pur),var(--grn))}
+.res-emoji{font-size:3.5rem;line-height:1;margin-bottom:.5rem}
+.res-pct{font-size:4.5rem;font-weight:800;line-height:1;background:linear-gradient(135deg,var(--acc),#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.res-msg{color:var(--txt2);margin:.5rem 0 1.5rem;font-size:.95rem}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}
+.stat{background:var(--s2);border-radius:var(--r);padding:.9rem;text-align:center;border:1px solid var(--border)}
+.stat-val{font-size:1.8rem;font-weight:800;line-height:1}
+.stat-lbl{font-size:.65rem;color:var(--txt3);margin-top:.2rem;text-transform:uppercase;letter-spacing:.5px}
+
+.res-section{background:var(--s1);border:1px solid var(--border);border-radius:var(--r3);padding:1.5rem;margin-bottom:1.2rem}
+.res-section h3{font-size:.95rem;font-weight:700;margin-bottom:1.2rem;display:flex;align-items:center;gap:.5rem}
+.mb-row{margin-bottom:.9rem}
+.mb-top{display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.3rem}
+.mb-top span:first-child{font-weight:700}
+.mb-bar{height:7px;background:var(--s3);border-radius:4px;overflow:hidden}
+.mb-fill{height:100%;border-radius:4px;transition:width .6s .1s}
+
+/* Leaderboard */
+.podium{display:flex;justify-content:center;align-items:flex-end;gap:.8rem;margin-bottom:1.5rem;padding:.5rem 0}
+.pod-slot{flex:1;max-width:120px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.pod-medal{font-size:1.4rem;line-height:1;margin-bottom:.3rem}
+.pod-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;margin-bottom:.4rem;border:2px solid transparent}
+.pod-name{font-size:.72rem;font-weight:700;word-break:break-all;max-width:100px}
+.pod-pct{font-size:.65rem;color:var(--txt3);margin-top:.1rem}
+.pod-base{border-radius:4px 4px 0 0;margin-top:.4rem;width:100%}
+.lb-table{width:100%;border-collapse:collapse;font-size:.8rem}
+.lb-table th{padding:.4rem .6rem;text-align:left;color:var(--txt3);border-bottom:1px solid var(--border);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.lb-table td{padding:.5rem .6rem;border-bottom:1px solid rgba(255,255,255,.04)}
+.lb-table tr.you td{background:rgba(79,158,255,.08);color:var(--acc)}
+.you-tag{background:var(--acc);color:#000;padding:.05rem .35rem;border-radius:3px;font-size:.6rem;font-weight:800;margin-left:.3rem}
+
+.res-actions{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-top:.5rem}
+.ra-btn{padding:.7rem 1.4rem;border-radius:var(--r);border:1.5px solid var(--border);background:var(--s2);color:var(--txt);cursor:pointer;font-family:'Outfit',sans-serif;font-size:.88rem;font-weight:700;transition:all .15s}
+.ra-btn:hover{border-color:var(--acc);color:var(--acc)}
+.ra-btn.primary{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;border:none}
+.ra-btn.primary:hover{opacity:.88}
+
+/* Confetti */
+.cf{position:fixed;border-radius:2px;animation:cf-fall linear forwards;pointer-events:none;z-index:9999}
+@keyframes cf-fall{to{transform:translateY(105vh) rotate(540deg);opacity:0}}
+
+/* Mobile */
+@media(max-width:640px){
+  #s-exam.active{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .q-body{padding:1.2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ LANDING ══ -->
+<div id="s-land" class="screen active">
+  <div class="brand">
+    <div class="brand-logo">CDAC ESD</div>
+    <div class="brand-sub">Mock Exam Portal · CCE 2026 · PGCP-ESD</div>
+    <div class="brand-bar"></div>
+  </div>
+  <div class="form-card">
+    <h2>🎯 Start Practice Exam</h2>
+    <div class="field">
+      <label>Your Name</label>
+      <input type="text" id="inp-name" placeholder="Enter your name..." autocomplete="off">
+    </div>
+    <div class="field">
+      <label>Select Module</label>
+      <select id="inp-mod">
+        <option value="ALL">📚 All Modules — 200 Questions (90 min)</option>
+        <option value="EC">🔵 Embedded C Programming — 50 Questions (30 min)</option>
+        <option value="DSA">🟢 Data Structures & Algorithms — 50 Questions (30 min)</option>
+        <option value="OS">🟡 Embedded Operating Systems — 50 Questions (30 min)</option>
+        <option value="MCU">🟣 Microcontroller & RISC-V — 50 Questions (30 min)</option>
+      </select>
+    </div>
+    <button class="btn-primary" id="btn-proceed">Proceed to Instructions →</button>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-val">200</div><div class="kpi-lbl">Questions</div></div>
+    <div class="kpi"><div class="kpi-val">4</div><div class="kpi-lbl">Modules</div></div>
+    <div class="kpi"><div class="kpi-val">0</div><div class="kpi-lbl">Negative Marks</div></div>
+    <div class="kpi"><div class="kpi-val" id="kpi-attempts">0</div><div class="kpi-lbl">Attempts</div></div>
+  </div>
+</div>
+
+<!-- ══ INSTRUCTIONS ══ -->
+<div id="s-instr" class="screen">
+  <div class="instr-card">
+    <h2>📋 Exam Instructions</h2>
+    <div class="instr-item"><span class="instr-icon">⏱</span><span>Timer: <em>30 min per module</em> / <em>90 min</em> for All Modules. Auto-submits on timeout.</span></div>
+    <div class="instr-item"><span class="instr-icon">✅</span><span>Marking: <em>+1 mark</em> for each correct answer</span></div>
+    <div class="instr-item"><span class="instr-icon">❌</span><span><em>No negative marking</em> — wrong answers get 0 marks</span></div>
+    <div class="instr-item"><span class="instr-icon">⏭</span><span>You can <em>Skip</em> questions and return to them later</span></div>
+    <div class="instr-item"><span class="instr-icon">⌨</span><span>Keyboard: Press <em>1–4</em> to answer, <em>← →</em> for navigation</span></div>
+    <div class="instr-item"><span class="instr-icon">💡</span><span>After each answer, a <em>detailed explanation</em> is shown</span></div>
+    <div class="instr-item"><span class="instr-icon">🏆</span><span>Your result is saved to the <em>Leaderboard</em> after submission</span></div>
+    <div class="instr-item"><span class="instr-icon">🔀</span><span>Answer options are <em>shuffled randomly</em> each attempt</span></div>
+    <button class="btn-go" id="btn-start">🚀 Start Exam Now</button>
+  </div>
+</div>
+
+<!-- ══ EXAM ══ -->
+<div id="s-exam" class="screen">
+  <!-- Left: question area -->
+  <div class="exam-left">
+    <div class="topbar">
+      <div class="topbar-left">
+        <span class="q-num">Q <strong id="qn-cur">1</strong> / <strong id="qn-tot">50</strong></span>
+        <span class="mod-badge" id="qn-mod"></span>
+      </div>
+      <div class="topbar-right">
+        <span class="score-live">Score: <strong id="score-live">0</strong></span>
+        <span class="timer" id="timer">30:00</span>
+      </div>
+    </div>
+    <div class="q-body" id="q-body"></div>
+    <div class="exam-nav">
+      <div class="nav-group">
+        <button class="btn-nav" id="btn-prev">◀ Prev</button>
+        <button class="btn-nav skip" id="btn-skip">Skip ⏭</button>
+        <button class="btn-nav accent" id="btn-next">Next ▶</button>
+      </div>
+      <button class="btn-nav danger" id="btn-submit">Submit Exam ✓</button>
+    </div>
+  </div>
+  <!-- Right: sidebar -->
+  <div class="sidebar">
+    <div class="sb-section">
+      <div class="sb-title">Module Filter</div>
+      <div class="mod-filter">
+        <button class="mf-btn active" data-m="ALL">ALL</button>
+        <button class="mf-btn" data-m="EC">EC</button>
+        <button class="mf-btn" data-m="DSA">DSA</button>
+        <button class="mf-btn" data-m="OS">OS</button>
+        <button class="mf-btn" data-m="MCU">MCU</button>
+      </div>
+      <div class="prog-rows" id="prog-rows"></div>
+    </div>
+    <div class="dot-grid" id="dot-grid"></div>
+    <div class="sb-legend">
+      <span class="leg"><span class="leg-sq" style="background:var(--grn)"></span>Correct</span>
+      <span class="leg"><span class="leg-sq" style="background:var(--red)"></span>Wrong</span>
+      <span class="leg"><span class="leg-sq" style="background:var(--ylw)"></span>Skipped</span>
+      <span class="leg"><span class="leg-sq" style="background:var(--border)"></span>Not done</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ RESULT ══ -->
+<div id="s-result" class="screen">
+  <div class="result-inner">
+    <div class="res-hero">
+      <div class="res-emoji" id="r-emoji"></div>
+      <div class="res-pct" id="r-pct"></div>
+      <div class="res-msg" id="r-msg"></div>
+      <div class="stats-grid">
+        <div class="stat"><div class="stat-val" style="color:var(--grn)" id="r-correct">0</div><div class="stat-lbl">Correct</div></div>
+        <div class="stat"><div class="stat-val" style="color:var(--red)" id="r-wrong">0</div><div class="stat-lbl">Wrong</div></div>
+        <div class="stat"><div class="stat-val" style="color:var(--ylw)" id="r-skip">0</div><div class="stat-lbl">Skipped</div></div>
+        <div class="stat"><div class="stat-val" style="color:var(--pur)" id="r-time">0m</div><div class="stat-lbl">Time Used</div></div>
+      </div>
+    </div>
+    <div class="res-section" id="r-breakdown"></div>
+    <div class="res-section" id="r-lb"></div>
+    <div class="res-actions">
+      <button class="ra-btn primary" id="btn-retry">🔄 Retake Exam</button>
+      <button class="ra-btn" id="btn-home">🏠 Home</button>
+      <button class="ra-btn" id="btn-clrlb">🗑 Clear Leaderboard</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// QUESTION BANK — 200 Questions
+// {m, q, code?, o:[4], a:0-3(correct), tip, e}
+// ═══════════════════════════════════════════
+const BANK = [
+// ── EMBEDDED C (50) ──
+{m:"EC",q:"What is the output?\nint x = 5;\nprintf(\"%d\", x++);",code:"int x = 5;\nprintf(\"%d\", x++);",o:["5","6","4","Undefined"],a:0,tip:"Post-increment",e:"x++ is post-increment: returns current value (5) first, then increments x to 6. So printf prints 5."},
+{m:"EC",q:"Which storage class variable persists for the program lifetime but has file scope only?",o:["auto","extern","static (global)","register"],a:2,tip:"static global",e:"A static global variable has file scope (not visible outside the file) but lives for the entire program duration."},
+{m:"EC",q:"What does malloc(0) return?",o:["Always NULL","NULL or unique non-NULL pointer (implementation-defined)","Always a valid pointer","Crash"],a:1,tip:"malloc(0) edge case",e:"C standard says malloc(0) may return NULL or a non-NULL unique pointer that must not be dereferenced. It is implementation-defined."},
+{m:"EC",q:"What is the size of any pointer on a 64-bit system?",o:["4 bytes","2 bytes","8 bytes","Depends on pointed type"],a:2,tip:"Pointer size on 64-bit",e:"On 64-bit systems, all pointer types (int*, char*, void*) are 8 bytes, since memory addresses are 64-bit wide."},
+{m:"EC",q:"What is the output?\nint a[] = {1,2,3};\nprintf(\"%d\", *(a+1));",code:"int a[] = {1,2,3};\nprintf(\"%d\", *(a+1));",o:["1","2","3","Address of a[1]"],a:1,tip:"Pointer arithmetic on array",e:"a decays to pointer to first element. a+1 points to a[1]=2. Dereferencing gives 2."},
+{m:"EC",q:"Which correctly declares a pointer to a function taking int and returning int?",o:["int *fp(int)","int (*fp)(int)","int *(fp)(int)","(int*)fp(int)"],a:1,tip:"Function pointer syntax",e:"int (*fp)(int) — the parentheses around *fp bind first, making fp a pointer to a function. Without them, int *fp(int) declares a function returning int*."},
+{m:"EC",q:"What does 'volatile' tell the compiler?",o:["Store in register","Do not optimize accesses — value may change unexpectedly","Make it constant","Allocate on heap"],a:1,tip:"volatile keyword",e:"volatile prevents the compiler from caching/optimizing reads and writes. Used for hardware registers and ISR-shared variables."},
+{m:"EC",q:"What is the result of: 5 & 3?",o:["1","7","2","15"],a:0,tip:"Bitwise AND",e:"5=0101, 3=0011. AND=0001=1."},
+{m:"EC",q:"calloc() differs from malloc() because calloc():",o:["Is faster","Zero-initializes the allocated memory","Takes one argument","Allocates on stack"],a:1,tip:"calloc vs malloc",e:"calloc(n,size) allocates n*size bytes AND zeroes them all. malloc() allocates but does NOT initialize memory."},
+{m:"EC",q:"What is a dangling pointer?",o:["NULL pointer","Pointer to already-freed memory","void pointer","Pointer to local variable after return"],a:1,tip:"Dangling pointer",e:"A dangling pointer points to memory that was freed via free(). Dereferencing it is undefined behavior and a common bug."},
+{m:"EC",q:"What is sizeof('A') in C (not C++)?",o:["1","2","4","8"],a:2,tip:"Character literal type in C",e:"In C, character literals like 'A' have type int, not char. So sizeof('A') = sizeof(int) = 4."},
+{m:"EC",q:"What is the output?\nint x=10;\nif(x=0) printf(\"zero\");\nelse printf(\"nonzero\");",code:"int x=10;\nif(x=0) printf(\"zero\");\nelse printf(\"nonzero\");",o:["zero","nonzero","Compile error","Nothing"],a:1,tip:"Assignment inside if",e:"x=0 is an assignment (not ==). It assigns 0 to x and evaluates to 0 (false). So else branch runs → prints 'nonzero'."},
+{m:"EC",q:"Which header provides malloc, calloc, free?",o:["<string.h>","<stdio.h>","<stdlib.h>","<alloc.h>"],a:2,tip:"stdlib.h",e:"Dynamic memory functions (malloc, calloc, realloc, free) are declared in <stdlib.h>."},
+{m:"EC",q:"What is the output?\nint x=7; printf(\"%d\", x&(x-1));",code:"int x=7; printf(\"%d\", x&(x-1));",o:["7","6","0","1"],a:1,tip:"Clear lowest set bit trick",e:"x=7=0111, x-1=6=0110. AND=0110=6. This trick clears the lowest set bit of x."},
+{m:"EC",q:"What does 'extern' keyword mean?",o:["Variable is local","Variable/function defined in another translation unit","Variable is constant","Variable is on stack"],a:1,tip:"extern keyword",e:"extern tells the compiler: this variable/function exists but is defined in a different file. No memory is allocated here."},
+{m:"EC",q:"What is the output?\nint a=2,b=3; printf(\"%d\",a<<b);",code:"int a=2,b=3; printf(\"%d\",a<<b);",o:["6","8","16","24"],a:2,tip:"Left shift = multiply by 2^n",e:"a<<b = 2<<3 = 2×2³ = 2×8 = 16."},
+{m:"EC",q:"Which preprocessor directive prevents multiple inclusion of a header?",o:["#once","#include_guard","#ifndef HEADER_H / #define / #endif","#protect"],a:2,tip:"Header guard",e:"Standard include guard: #ifndef HEADER_H / #define HEADER_H / ... / #endif. Also #pragma once works on most compilers."},
+{m:"EC",q:"What is the output?\nprintf(\"%d\", 10/3);",code:"printf(\"%d\", 10/3);",o:["3.33","3","4","Error"],a:1,tip:"Integer division truncates",e:"In C, dividing two integers truncates towards zero. 10/3 = 3 (remainder 1 is discarded)."},
+{m:"EC",q:"What is a double pointer (int **pp)?",o:["Pointer to float","Pointer to a pointer to int","Two separate pointers","Double-precision pointer"],a:1,tip:"Double pointer",e:"int **pp holds the address of an int*. Used for dynamic 2D arrays, output parameters in functions, etc."},
+{m:"EC",q:"What is the output?\nint a=5,b=10; printf(\"%d\", a>b?a:b);",code:"int a=5,b=10; printf(\"%d\", a>b?a:b);",o:["5","10","1","0"],a:1,tip:"Ternary operator",e:"5>10 is false, so ternary returns b=10."},
+{m:"EC",q:"'register' storage class hints the compiler to:",o:["Store on heap","Store in CPU register for fast access","Store in ROM","Make read-only"],a:1,tip:"register hint",e:"register suggests the compiler keep the variable in a CPU register. Modern compilers often ignore this, as they optimize automatically."},
+{m:"EC",q:"What does the 'const' qualifier do?",o:["Zero-initialize the variable","Prevent modification after initialization","Allocate in ROM always","Speed up execution"],a:1,tip:"const qualifier",e:"const makes a variable read-only at compile level — any attempt to modify it produces a compile error."},
+{m:"EC",q:"What is the output of: printf(\"%d\", !0);",code:"printf(\"%d\", !0);",o:["0","1","-1","Undefined"],a:1,tip:"Logical NOT",e:"!0 = logical NOT of false = 1 (true in C). printf prints 1."},
+{m:"EC",q:"In C, what is a union?",o:["Like struct but all members at different addresses","All members share the same memory location","Array of different types","Pointer to struct"],a:1,tip:"union",e:"A union allocates memory equal to its largest member. All members overlap at the same address — only one can be used at a time."},
+{m:"EC",q:"What is the output? (switch fall-through)\nint x=1;\nswitch(x){\ncase 1:printf(\"A\");\ncase 2:printf(\"B\");\ndefault:printf(\"C\");}",code:"int x=1;\nswitch(x){\ncase 1:printf(\"A\");\ncase 2:printf(\"B\");\ndefault:printf(\"C\");}",o:["A","AB","ABC","A then stop"],a:2,tip:"Switch fall-through without break",e:"Without break, execution falls through ALL subsequent cases. case 1 matches → prints A, falls to case 2 → B, falls to default → C. Output: ABC."},
+{m:"EC",q:"What is the result of: 7 ^ 5?",o:["3","12","2","1"],a:2,tip:"Bitwise XOR",e:"7=0111, 5=0101. XOR=0010=2."},
+{m:"EC",q:"Which function reads a line including spaces from stdin?",o:["scanf(\"%s\")","gets()","fgets()","getword()"],a:2,tip:"fgets for safe line input",e:"fgets(buf,size,stdin) reads up to size-1 chars including spaces safely. scanf(\"%s\") stops at whitespace. gets() is unsafe (buffer overflow risk)."},
+{m:"EC",q:"What does 'typedef unsigned int uint;' do?",o:["Creates new type","Creates alias 'uint' for 'unsigned int'","Replaces unsigned int everywhere","Makes uint constant"],a:1,tip:"typedef creates alias",e:"typedef creates a synonym/alias for an existing type. uint becomes interchangeable with unsigned int."},
+{m:"EC",q:"In GDB, which command sets a breakpoint at line 20?",o:["stop 20","break 20","pause 20","mark 20"],a:1,tip:"GDB breakpoint",e:"In GDB: 'break 20' or 'b 20' sets a breakpoint at line 20. Other useful commands: run, next(n), step(s), continue(c), print(p)."},
+{m:"EC",q:"When an array is passed to a function in C:",o:["Array is fully copied","Pointer to first element is passed","Array length is automatically passed","Error — arrays can't be passed"],a:1,tip:"Array decay to pointer",e:"Arrays decay to a pointer to their first element when passed. The function receives a pointer, not a copy of the array."},
+{m:"EC",q:"What is the output?\nchar *s=\"hello\";\nprintf(\"%c\",*(s+2));",code:"char *s=\"hello\";\nprintf(\"%c\",*(s+2));",o:["h","e","l","o"],a:2,tip:"String pointer indexing",e:"s points to 'h'. s+2 points to 3rd char 'l'. Dereferencing gives 'l'."},
+{m:"EC",q:"String literals in C are stored in:",o:["Stack","Heap","Read-only data segment","BSS segment"],a:2,tip:"String literal storage",e:"String literals like \"hello\" are in the read-only data segment. Attempting to modify them causes undefined behavior (often segfault)."},
+{m:"EC",q:"Which fopen mode opens a file for writing (creates if not exists)?",o:["\"r\"","\"w\"","\"a\"","\"x\""],a:1,tip:"fopen modes",e:"\"w\" opens/creates a file for writing (truncates if exists). \"r\"=read, \"a\"=append, \"r+\"=read+write."},
+{m:"EC",q:"What is the value of x after: int x=5; x>>=1;",code:"int x=5; x>>=1;",o:["10","4","2","1"],a:2,tip:"Right shift arithmetic",e:"x>>=1 means x = x>>1 = 5>>1 = 2 (5/2 integer division = 2, since 5=0101 >> 1 = 0010 = 2)."},
+{m:"EC",q:"What is the output?\nint arr[3]={0};\nprintf(\"%d %d\",arr[0],arr[2]);",code:"int arr[3]={0};\nprintf(\"%d %d\",arr[0],arr[2]);",o:["0 0","Garbage Garbage","0 Garbage","Compile error"],a:0,tip:"Array zero initialization",e:"Initializing with {0} sets first element to 0 and zero-initializes all remaining elements. Both arr[0] and arr[2] = 0."},
+{m:"EC",q:"What is enum used for in C?",o:["Dynamic allocation","Named integer constants","String enumeration","Pointer types"],a:1,tip:"enum for named constants",e:"enum { RED=0, GREEN=1, BLUE=2 } defines named integer constants, making code more readable than magic numbers."},
+{m:"EC",q:"What is argc in main(int argc, char *argv[])?",o:["Array of argument strings","Count of command-line arguments (including program name)","Size of argv buffer","Index of first argument"],a:1,tip:"argc = argument count",e:"argc is the count of command-line arguments. argv[0] is the program name, argv[1] is first argument, etc."},
+{m:"EC",q:"What is the output?\nchar c='A';\nprintf(\"%d\",c);",code:"char c='A';\nprintf(\"%d\",c);",o:["A","65","1","Error"],a:1,tip:"char as integer, ASCII",e:"'A' has ASCII value 65. %d format prints the integer value of c, which is 65."},
+{m:"EC",q:"What is recursion?",o:["Loop without condition","A function that calls itself","Multiple return values","Goto statement"],a:1,tip:"Recursion",e:"Recursion = a function calling itself. Must have a base case to terminate. Stack space grows with each call."},
+{m:"EC",q:"What is the output of sizeof(int[5])?",code:"sizeof(int[5])",o:["5","10","20","4"],a:2,tip:"sizeof array",e:"sizeof(int)=4 on typical system. sizeof(int[5]) = 5×4 = 20 bytes."},
+{m:"EC",q:"Which is the correct way to free dynamically allocated memory?",o:["delete ptr","free(ptr)","dealloc(ptr)","release(ptr)"],a:1,tip:"free() from stdlib.h",e:"free(ptr) from <stdlib.h> releases memory allocated by malloc/calloc/realloc. Does NOT set ptr to NULL — you must do that manually to avoid dangling pointer."},
+{m:"EC",q:"#define PI 3.14 — what does this do?",o:["Declares float variable PI","Creates textual substitution macro PI→3.14","Creates typed constant","Reserves memory for PI"],a:1,tip:"#define macro = textual substitution",e:"#define is a preprocessor directive creating a textual substitution. Every PI in source code is replaced with 3.14 before compilation."},
+{m:"EC",q:"What does the Makefile tool do?",o:["Compiles only one file","Automates build process — tracks dependencies and recompiles only changed files","Links object files manually","Runs test cases"],a:1,tip:"Makefile build automation",e:"Make reads the Makefile, checks timestamps, and only recompiles files that changed or whose dependencies changed. Automates the full build pipeline."},
+{m:"EC",q:"What is the output? int x=0; while(x<3){printf(\"%d \",x++);}",code:"int x=0; while(x<3){printf(\"%d \",x++);}",o:["0 1 2","1 2 3","0 1 2 3","Infinite loop"],a:0,tip:"while loop with post-increment",e:"Loop runs for x=0,1,2 (exits when x=3). printf uses post-increment so prints 0,1,2 then x becomes 1,2,3. Output: 0 1 2."},
+{m:"EC",q:"What is a bit-field in a struct?",o:["Array of bits","Struct member with specified number of bits","Bitwise pointer","Bit-level array"],a:1,tip:"Bit-fields",e:"struct { unsigned int flag:1; unsigned int mode:3; } uses bit-fields to pack data into specified bit widths. Saves memory in embedded systems."},
+{m:"EC",q:"Which Linux command compiles a C file with GCC?",o:["cc file.c","gcc file.c -o output","make file.c","ld file.c"],a:1,tip:"GCC compilation",e:"gcc file.c -o output compiles file.c and produces executable 'output'. -Wall adds warnings, -g adds debug info."},
+{m:"EC",q:"What is the output? int x=5; printf(\"%d %d\",x,++x);",code:"int x=5; printf(\"%d %d\",x,++x);",o:["5 6","6 6","5 5","Undefined behavior"],a:3,tip:"Undefined behavior: order of evaluation",e:"Modifying x (++x) and reading x in the same expression without sequence point is undefined behavior in C. The output is unpredictable."},
+
+// ── DSA (50) ──
+{m:"DSA",q:"What is the time complexity of binary search?",o:["O(n)","O(log n)","O(n log n)","O(1)"],a:1,tip:"Binary search = O(log n)",e:"Binary search halves the search space each step. Recurrence T(n)=T(n/2)+1 solves to O(log n)."},
+{m:"DSA",q:"Which data structure uses LIFO order?",o:["Queue","Stack","Circular Queue","Priority Queue"],a:1,tip:"LIFO = Stack",e:"Stack is Last-In-First-Out. push() adds to top, pop() removes from top. Used in recursion, undo operations, expression evaluation."},
+{m:"DSA",q:"Time complexity of inserting at the beginning of a singly linked list?",o:["O(n)","O(log n)","O(1)","O(n²)"],a:2,tip:"Head insertion = O(1)",e:"Inserting at head only requires updating the head pointer — O(1) regardless of list size."},
+{m:"DSA",q:"Which sorting algorithm always has O(n log n) worst case?",o:["Bubble sort","Quick sort","Merge sort","Selection sort"],a:2,tip:"Merge sort: always O(n log n)",e:"Merge sort always divides and merges in O(n log n). Quick sort degrades to O(n²) with bad pivot choice."},
+{m:"DSA",q:"In a Binary Search Tree (BST), where is the minimum element?",o:["Root","Rightmost node","Leftmost node","Any leaf"],a:2,tip:"BST minimum = leftmost",e:"BST property: all left children < parent. The minimum is found by going left until there is no left child."},
+{m:"DSA",q:"What is the space complexity of naive recursive Fibonacci?",o:["O(1)","O(n)","O(log n)","O(2ⁿ)"],a:1,tip:"Recursion stack depth",e:"The call stack depth at maximum is O(n) for fib(n). Space complexity = O(n) due to stack frames."},
+{m:"DSA",q:"What is a circular queue's main advantage?",o:["Faster search","Reuses freed front space — no 'false full' problem","Less memory than array","Simpler implementation"],a:1,tip:"Circular queue reuses space",e:"In a linear queue, dequeued front spaces are wasted. Circular queue wraps rear pointer around, reusing those spaces."},
+{m:"DSA",q:"Which data structure does BFS (Breadth-First Search) use?",o:["Stack","Queue","Priority Queue","Deque"],a:1,tip:"BFS uses Queue (FIFO)",e:"BFS explores level by level. FIFO queue ensures nodes are processed in discovery order."},
+{m:"DSA",q:"Quick sort worst-case time complexity?",o:["O(n log n)","O(n)","O(n²)","O(log n)"],a:2,tip:"Quick sort worst = O(n²)",e:"Worst case: pivot always smallest/largest (e.g., sorted array with first element as pivot) → O(n²). Average = O(n log n)."},
+{m:"DSA",q:"In hashing, what is a 'collision'?",o:["Two identical keys","Two different keys hash to same index","Hash table is full","Key not found"],a:1,tip:"Hash collision",e:"Collision: different keys produce the same hash index. Resolved by chaining (linked lists) or open addressing (probing)."},
+{m:"DSA",q:"What is the height of a balanced AVL tree with n nodes?",o:["O(n)","O(log n)","O(√n)","O(n²)"],a:1,tip:"AVL tree height = O(log n)",e:"AVL trees enforce balance factor ≤ 1. This guarantees height = O(log n), ensuring O(log n) search/insert/delete."},
+{m:"DSA",q:"Time complexity of accessing an element in an array by index?",o:["O(n)","O(log n)","O(1)","O(n²)"],a:2,tip:"Array random access = O(1)",e:"Array element is at base_addr + index × element_size — direct computation, no traversal needed. O(1)."},
+{m:"DSA",q:"What extra pointer does a doubly linked list node have vs singly linked?",o:["Next","Previous","Head","Tail"],a:1,tip:"DLL has 'prev' pointer",e:"DLL node has both 'next' and 'prev' pointers, enabling traversal in both directions. Singly linked list has only 'next'."},
+{m:"DSA",q:"Which collision resolution uses linked lists at each bucket?",o:["Linear probing","Quadratic probing","Separate chaining","Double hashing"],a:2,tip:"Separate chaining = linked lists",e:"In separate chaining, each hash table slot holds a linked list of all keys that hash to it. Simple and handles high load factors well."},
+{m:"DSA",q:"Time complexity of heap sort?",o:["O(n)","O(n log n)","O(n²)","O(log n)"],a:1,tip:"Heap sort = O(n log n)",e:"Build heap: O(n). Extract max n times × O(log n) each = O(n log n) total."},
+{m:"DSA",q:"What distinguishes a Red-Black tree from a plain BST?",o:["Faster search only","Self-balancing via node coloring rules ensuring O(log n) height","No duplicate keys","Alphabetical ordering"],a:1,tip:"Red-Black = self-balancing BST",e:"Red-Black tree colors nodes red/black with rules (root=black, no red-red parent-child, equal black height all paths) ensuring O(log n) height."},
+{m:"DSA",q:"What does 'enqueue' do in a queue?",o:["Remove from front","Add to rear","Add to front","Remove from rear"],a:1,tip:"Queue: enqueue = add to rear",e:"Queue is FIFO. enqueue adds to rear (back). dequeue removes from front. Both O(1)."},
+{m:"DSA",q:"Best-case time complexity of bubble sort (on sorted array with optimization)?",o:["O(n²)","O(n log n)","O(n)","O(1)"],a:2,tip:"Optimized bubble sort best case = O(n)",e:"With a 'swapped' flag: if no swaps occur in a pass, array is sorted. On already-sorted input → one pass, O(n)."},
+{m:"DSA",q:"What is an ADT (Abstract Data Type)?",o:["Data type with fixed implementation","Data type defined by its operations and behavior, not implementation","Hardware-specific type","Compiler-generated type"],a:1,tip:"ADT = behavior without implementation",e:"ADT specifies WHAT operations are available and their behavior, independent of HOW they are implemented. Stack ADT: push, pop, peek, isEmpty."},
+{m:"DSA",q:"Pushing to a full array-based stack causes:",o:["Stack underflow","Stack overflow","Segmentation fault","Automatic resize"],a:1,tip:"Stack overflow",e:"Stack overflow = attempt to push when stack is full. Stack underflow = attempt to pop from empty stack."},
+{m:"DSA",q:"In-order traversal of a BST produces:",o:["Random order","Ascending sorted order","Descending order","Breadth-first order"],a:1,tip:"BST in-order = sorted",e:"In-order (Left → Root → Right) visits BST nodes in ascending key order. Useful for sorting."},
+{m:"DSA",q:"Insertion sort is most efficient when:",o:["Array is reverse sorted","Array is large","Array is nearly sorted or small","Array has duplicates"],a:2,tip:"Insertion sort: best on nearly sorted",e:"Insertion sort has O(n) best case on nearly sorted arrays (few shifts needed). Good for small n or mostly sorted data."},
+{m:"DSA",q:"Search time in a balanced BST?",o:["O(n)","O(n²)","O(log n)","O(1)"],a:2,tip:"Balanced BST search = O(log n)",e:"Each comparison eliminates half the tree. With height=log n, search is O(log n)."},
+{m:"DSA",q:"In selection sort, each pass:",o:["Swaps adjacent elements","Finds minimum and places it at correct position","Builds a heap","Partitions around pivot"],a:1,tip:"Selection sort: find min each pass",e:"Selection sort finds the minimum of the unsorted portion and swaps it into the next sorted position."},
+{m:"DSA",q:"DFS (Depth-First Search) uses which structure internally?",o:["Queue","Heap","Stack (or recursion)","Array"],a:2,tip:"DFS uses Stack",e:"DFS uses an explicit stack or recursion (implicit stack) to go deep before backtracking."},
+{m:"DSA",q:"Which is NOT a property of a max-heap?",o:["Parent ≥ both children","Complete binary tree","Root is maximum","Left child > right child always"],a:3,tip:"Max-heap: no left>right rule",e:"Max-heap requires parent ≥ children. There is NO ordering between siblings. Left > right is NOT required."},
+{m:"DSA",q:"Space complexity of merge sort?",o:["O(1)","O(log n)","O(n)","O(n log n)"],a:2,tip:"Merge sort needs O(n) extra space",e:"Merge step needs temporary arrays totalling O(n) space. Unlike quicksort which is in-place."},
+{m:"DSA",q:"Best hash function for integer keys?",o:["h(k)=k mod m where m is prime","h(k)=k*k mod m","h(k)=k+1","h(k)=0"],a:0,tip:"Modulo prime for uniform distribution",e:"h(k) = k mod m with prime m distributes keys uniformly, minimizing clustering and collisions."},
+{m:"DSA",q:"In a circular linked list, the last node's 'next' points to:",o:["NULL","Itself","The first node (head)","Previous node"],a:2,tip:"Circular: last → first",e:"In a circular linked list, the last node's next pointer points back to the head, forming a cycle."},
+{m:"DSA",q:"Worst-case time for searching in a hash table with chaining?",o:["O(1)","O(log n)","O(n)","O(n²)"],a:2,tip:"Hash worst case = O(n)",e:"If all n keys hash to the same bucket, the chain has length n — search is O(n). Average case is O(1+α) where α=load factor."},
+{m:"DSA",q:"Minimum nodes in AVL tree of height 3?",o:["4","6","7","8"],a:2,tip:"N(h)=N(h-1)+N(h-2)+1",e:"N(0)=1, N(1)=2, N(2)=N(1)+N(0)+1=4, N(3)=N(2)+N(1)+1=7."},
+{m:"DSA",q:"Which sorting algorithm is stable?",o:["Quick sort","Heap sort","Merge sort","Selection sort"],a:2,tip:"Merge sort is stable",e:"Stable: equal elements maintain original relative order. Merge sort is stable. Quick sort and heap sort are generally NOT stable."},
+{m:"DSA",q:"Time to find an element in an unsorted array?",o:["O(1)","O(log n)","O(n)","O(n²)"],a:2,tip:"Linear search = O(n)",e:"Must potentially check every element in an unsorted array. Worst case: O(n)."},
+{m:"DSA",q:"What is a leaf node?",o:["Node with two children","Node with no children","Root node","Node at level 1"],a:1,tip:"Leaf = no children",e:"A leaf (external) node has no children. Terminal node of the tree."},
+{m:"DSA",q:"Quick sort uses which algorithmic paradigm?",o:["Dynamic programming","Divide and conquer","Greedy","Backtracking"],a:1,tip:"Quick sort: divide & conquer",e:"Quick sort: pick pivot, partition (divide), recursively sort partitions (conquer)."},
+{m:"DSA",q:"Pop from empty stack causes:",o:["Returns 0","Returns NULL","Stack underflow","Stack overflow"],a:2,tip:"Empty stack pop = underflow",e:"Popping from an empty stack = stack underflow. Must check isEmpty() before popping."},
+{m:"DSA",q:"Time complexity to build a binary heap from n elements (Floyd's method)?",o:["O(n log n)","O(n)","O(log n)","O(n²)"],a:1,tip:"Build heap = O(n)",e:"Floyd's heapify-from-bottom takes O(n) total — most nodes are near the bottom and need few swaps."},
+{m:"DSA",q:"Which operation removes the minimum from a min-heap?",o:["dequeue","pop","extract-min","delete-root"],a:2,tip:"extract-min from heap",e:"extract-min removes root (minimum), replaces with last element, then sifts down. O(log n)."},
+{m:"DSA",q:"What is the maximum number of nodes at level k of a binary tree (root = level 0)?",o:["k","2k","2^k","k²"],a:2,tip:"Level k max nodes = 2^k",e:"Level 0 (root)=1=2⁰, level 1=2=2¹, level k=2^k (all nodes have 2 children)."},
+{m:"DSA",q:"Given pointer to a node in a doubly linked list, deletion takes:",o:["O(n)","O(log n)","O(1)","O(n²)"],a:2,tip:"DLL deletion with pointer = O(1)",e:"With prev and next pointers available, deletion only requires unlinking: prev.next=next, next.prev=prev. O(1)."},
+{m:"DSA",q:"Which traversal is used to safely delete all nodes of a tree?",o:["Pre-order","In-order","Post-order","Level-order"],a:2,tip:"Post-order for tree deletion",e:"Post-order (Left-Right-Root) deletes children before parent, avoiding dangling references to deleted nodes."},
+{m:"DSA",q:"What is a priority queue?",o:["Queue where last item has priority","Queue where highest priority item is dequeued first","Queue with two ends","Sorted array"],a:1,tip:"Priority queue: highest priority first",e:"Priority queue dequeues the element with highest (or lowest) priority first, regardless of insertion order. Usually implemented with a heap."},
+{m:"DSA",q:"What is Big-O notation used for?",o:["Exact runtime in seconds","Upper bound on algorithm's growth rate","Lower bound on best case","Memory usage only"],a:1,tip:"Big-O = upper bound on growth",e:"Big-O describes the worst-case upper bound on how an algorithm's time (or space) grows with input size n."},
+{m:"DSA",q:"Sequential search on a sorted array can terminate early when:",o:["First element found","Current element > target","Array half checked","Prime index reached"],a:1,tip:"Early termination on sorted array",e:"If current element > target, target can't appear later (array is sorted). Safe to stop and return 'not found'."},
+
+// ── EMBEDDED OS (50) ──
+{m:"OS",q:"What is a process?",o:["A program stored on disk","A program in execution with its own resources","A system call","An OS service"],a:1,tip:"Process = program in execution",e:"A process is a running instance of a program. It has its own PCB, address space, stack, heap, and CPU state."},
+{m:"OS",q:"What does PCB (Process Control Block) contain?",o:["Only source code","Process state, registers, PID, memory maps, open files","File data","Network sockets only"],a:1,tip:"PCB stores all process info",e:"PCB stores everything needed to resume a process: PID, state, PC, registers, memory maps, open file descriptors, priority, etc."},
+{m:"OS",q:"What is context switching?",o:["Switching file contexts","Saving current process state to PCB and loading another process's state","Changing display","Switching network connections"],a:1,tip:"Context switch = save+load PCB",e:"Context switching: save current process's registers/PC to its PCB, then load another process's PCB to resume it. Has overhead."},
+{m:"OS",q:"Which scheduling algorithm can cause starvation of low-priority processes?",o:["Round Robin","FCFS","Priority Scheduling","SJF"],a:2,tip:"Priority scheduling → starvation",e:"In priority scheduling, if high-priority processes keep arriving, low-priority ones may never execute. Fix: aging (raise priority over time)."},
+{m:"OS",q:"What is a mutex?",o:["A process type","Synchronization primitive for mutual exclusion — only one thread at a time","Memory allocation function","An interrupt type"],a:1,tip:"Mutex = mutual exclusion lock",e:"Mutex allows only one thread to enter a critical section. Unlike semaphore, only the locking thread can unlock it (ownership)."},
+{m:"OS",q:"What is a semaphore?",o:["CPU register","Integer synchronization variable with atomic wait(P) and signal(V) operations","File system type","Scheduler algorithm"],a:1,tip:"Semaphore: P/V operations",e:"Semaphore: wait(P) decrements (blocks if 0), signal(V) increments (wakes waiter). Binary semaphore≈mutex, counting semaphore manages resources."},
+{m:"OS",q:"What are the four Coffman conditions for deadlock?",o:["Mutual exclusion, Hold-and-wait, No preemption, Circular wait","Priority, Starvation, Timeout, Livelock","Busy-wait, Blocking, Yielding, Sleeping","None of these"],a:0,tip:"Coffman conditions",e:"All 4 must hold for deadlock: (1) Mutual exclusion, (2) Hold-and-wait, (3) No preemption, (4) Circular wait. Breaking any one prevents deadlock."},
+{m:"OS",q:"What is the difference between a pipe and a FIFO (named pipe)?",o:["Pipes are faster","FIFO has a filesystem name; pipe is anonymous (related processes only)","Pipes support bidirectional I/O","FIFOs are for threads"],a:1,tip:"FIFO = named pipe",e:"Pipe: anonymous, only parent-child/related processes. FIFO: has a pathname in filesystem, usable by unrelated processes."},
+{m:"OS",q:"What is virtual memory?",o:["Extra physical RAM","OS technique giving processes illusion of more memory using disk (swap)","GPU memory","Cache memory"],a:1,tip:"Virtual memory uses disk as extension",e:"Virtual memory maps virtual addresses to physical RAM (or swap space on disk). Allows processes to use more memory than physically available."},
+{m:"OS",q:"What is thrashing?",o:["CPU overheating","Process spending more time paging in/out than actually executing","Disk fragmentation","Network congestion"],a:1,tip:"Thrashing = paging overhead > execution",e:"Thrashing: working set doesn't fit in RAM → constant page faults → CPU mostly doing I/O (paging) instead of executing code. Utilization collapses."},
+{m:"OS",q:"What does fork() return to the parent process?",o:["0","PID of child process","-1","PID of parent"],a:1,tip:"fork() returns child PID to parent",e:"fork(): returns child PID to parent, 0 to child, -1 on failure. Creates an almost identical copy of the calling process."},
+{m:"OS",q:"What is shared memory IPC?",o:["Kernel message buffer","Multiple processes map the same physical memory region directly","File-based communication","Socket connection"],a:1,tip:"Shared memory: fastest IPC",e:"Shared memory lets processes communicate by reading/writing the same memory region. Fastest IPC — no kernel copies after setup. Needs synchronization."},
+{m:"OS",q:"OSI Layer 3 (Network layer) is responsible for:",o:["Framing","Routing and logical addressing (IP)","End-to-end reliability","Session management"],a:1,tip:"Layer 3 = Network = routing",e:"Layer 3 (Network): IP addressing and routing packets between different networks. IP protocol lives here."},
+{m:"OS",q:"Which system call creates a new process in Linux?",o:["exec()","new()","fork()","spawn()"],a:2,tip:"fork() creates child process",e:"fork() creates a child by duplicating the parent. The child then uses exec() to load a different program if needed."},
+{m:"OS",q:"What does an inode store in Unix file system?",o:["File name","File metadata: permissions, size, timestamps, data block pointers","File contents","Directory listing"],a:1,tip:"inode = metadata, not filename",e:"inode stores file metadata: owner, permissions, size, timestamps, block pointers. The filename is in the directory entry, not the inode."},
+{m:"OS",q:"TCP vs UDP: TCP provides:",o:["Higher speed with no overhead","Reliable, ordered, error-checked delivery with connection setup","Connectionless transmission","Broadcast support only"],a:1,tip:"TCP: reliable ordered delivery",e:"TCP: 3-way handshake, sequence numbers, ACKs, retransmission = reliable ordered delivery. UDP: connectionless, faster, no guarantee."},
+{m:"OS",q:"What is a monitor (in OS synchronization)?",o:["A display device","High-level construct with mutex + condition variables encapsulating shared data","Type of semaphore","CPU scheduling algorithm"],a:1,tip:"Monitor: high-level sync",e:"Monitor encapsulates shared data + mutex + condition variables. Provides structured synchronization. Java's synchronized keyword implements monitors."},
+{m:"OS",q:"What is paging in memory management?",o:["Reading pages sequentially","Dividing virtual and physical memory into fixed-size blocks (pages/frames)","Sorting memory regions","OS boot process"],a:1,tip:"Paging: fixed-size virtual→physical",e:"Paging divides virtual memory into pages, physical into frames of equal size. Page table maps virtual pages to physical frames. Eliminates external fragmentation."},
+{m:"OS",q:"How does a system call differ from a library call?",o:["Library calls are deprecated","System call switches to kernel mode; library call stays in user mode","No difference","System calls are faster"],a:1,tip:"System call → kernel mode switch",e:"System call: CPU switches to kernel mode (expensive context switch). Library call: pure user-space function. E.g., printf (library) internally calls write() (system call)."},
+{m:"OS",q:"What is a zombie process?",o:["Malicious process","Completed process whose exit status wasn't collected by parent","Background daemon","Sleeping process"],a:1,tip:"Zombie = dead but not reaped",e:"Zombie: process finished but stays in process table because parent hasn't called wait()/waitpid() to collect exit status. Cleaned up when parent calls wait()."},
+{m:"OS",q:"Correct sequence for TCP server socket setup?",o:["connect→bind→listen→accept","socket→bind→listen→accept","socket→listen→bind→accept","bind→socket→listen→accept"],a:1,tip:"socket→bind→listen→accept",e:"TCP server: socket() create socket → bind() assign address/port → listen() mark as passive → accept() wait for client."},
+{m:"OS",q:"In Linux, the 'nice' value controls:",o:["Process name","CPU scheduling priority (-20=highest, +19=lowest)","Memory limit","File descriptor limit"],a:1,tip:"nice value = priority adjustment",e:"Nice value: -20 (highest priority) to +19 (lowest). Lower nice = more CPU time. Users can increase nice; only root can decrease (make higher priority)."},
+{m:"OS",q:"What is segmentation in memory management?",o:["Fixed-size memory pages","Variable-size logical segments (code, data, stack, heap) with base+limit","Same as paging","Hardware interrupt handling"],a:1,tip:"Segmentation: variable-size logical sections",e:"Segmentation divides process into logical segments of variable size, each with a base address and limit. Allows separate protection for code, data, stack."},
+{m:"OS",q:"What does wait() system call do?",o:["Sleeps parent forever","Blocks parent until child terminates and collects exit status (reaps zombie)","Creates new child","Sends signal"],a:1,tip:"wait() reaps child zombie",e:"wait() blocks until a child terminates, collects its exit status, and removes it from process table (prevents zombie). Returns child's PID."},
+{m:"OS",q:"Which IPC is fastest for same-machine communication?",o:["TCP sockets","Named pipes","Shared memory","Message queues"],a:2,tip:"Shared memory = fastest IPC",e:"Shared memory: after shmget/shmat setup, communication is just memory access — no kernel involvement per-operation, no copying."},
+{m:"OS",q:"What is the TLB (Translation Lookaside Buffer)?",o:["Buffer for disk reads","Hardware cache for recent virtual-to-physical address translations","Network buffer","DMA buffer"],a:1,tip:"TLB caches page table entries",e:"TLB is a small, fast hardware cache of recent virtual→physical translations. Without TLB: 2 memory accesses per read (page table + data). With TLB: ~1."},
+{m:"OS",q:"TCP and UDP operate at which OSI layer?",o:["Layer 2 (Data Link)","Layer 3 (Network)","Layer 4 (Transport)","Layer 5 (Session)"],a:2,tip:"TCP/UDP = Layer 4 Transport",e:"Layer 4 (Transport) provides end-to-end communication: TCP (reliable) and UDP (unreliable fast) both operate here."},
+{m:"OS",q:"kill() system call in Linux sends:",o:["Only SIGKILL signal","Any signal to a specified process","Terminates process immediately","Creates a new process"],a:1,tip:"kill(pid, sig) sends any signal",e:"Despite the name, kill(pid, signal) can send ANY signal (SIGTERM, SIGUSR1, SIGSTOP, etc.) to a process. SIGKILL=9 is just one option."},
+{m:"OS",q:"Banker's Algorithm is used for:",o:["CPU scheduling","Deadlock avoidance (checks if state remains safe)","Memory compaction","File allocation"],a:1,tip:"Banker's = deadlock avoidance",e:"Banker's Algorithm: before granting a resource, check if resulting state is 'safe' (all processes can eventually complete). Refuses unsafe requests."},
+{m:"OS",q:"What does exec() do after fork()?",o:["Creates another child","Replaces current process image with new program","Terminates parent","Forks again"],a:1,tip:"exec() replaces process image",e:"exec() family: replaces calling process's code, data, heap, stack with new program. PID stays same. Used after fork() to run different program."},
+{m:"OS",q:"What is the shell's role in an OS?",o:["Directly manages hardware","Command interpreter — interface between user and OS services","Allocates physical memory","Handles hardware interrupts"],a:1,tip:"Shell = command interpreter",e:"Shell (bash, sh, zsh) interprets user commands, invokes system calls, manages processes, and provides scripting. Bridge between user and kernel."},
+{m:"OS",q:"Which memory segment grows downward in a typical process?",o:["Code segment (.text)","Data segment (.data)","Heap","Stack"],a:3,tip:"Stack grows downward",e:"Stack grows from high to low addresses (downward). Heap grows upward. They grow towards each other — collision = stack overflow."},
+{m:"OS",q:"In Round Robin scheduling, what is a 'time quantum'?",o:["Process priority","Maximum CPU time slice given to each process","Memory allocation unit","I/O wait time"],a:1,tip:"Round Robin: time quantum",e:"Round Robin gives each process a fixed time quantum (slice). When it expires, process preempted and moved to back of queue. Fair, good for time-sharing."},
+{m:"OS",q:"What are pipes used for in Linux?",o:["Network communication","Inter-process communication via a unidirectional byte stream","File encryption","Memory sharing"],a:1,tip:"Pipe: IPC byte stream",e:"Pipe (|) creates a unidirectional byte stream: output of one process feeds as input to another. E.g., ls | grep .c"},
+{m:"OS",q:"What is the OSI Layer 7?",o:["Transport","Session","Presentation","Application"],a:3,tip:"Layer 7 = Application",e:"OSI Layer 7 (Application): HTTP, FTP, SMTP, DNS, SSH. Provides network services directly to applications."},
+{m:"OS",q:"What is a page fault?",o:["Hardware error","Access to virtual page not currently in physical RAM → OS loads it from disk","Wrong page permissions","CPU cache miss"],a:1,tip:"Page fault: page not in RAM",e:"Page fault: CPU accesses virtual address whose page is not in RAM. OS handles it: find page on disk, load into a free frame, update page table, resume."},
+{m:"OS",q:"What is an orphan process?",o:["Process without file descriptors","Process whose parent terminated before it","Zombie process","Background process"],a:1,tip:"Orphan = parent died first",e:"Orphan process: parent died before child. Linux re-parents orphans to init (PID 1) which will call wait() for them."},
+{m:"OS",q:"Which signal is used to gracefully terminate a process?",o:["SIGKILL (9)","SIGTERM (15)","SIGSTOP","SIGHUP"],a:1,tip:"SIGTERM = graceful termination",e:"SIGTERM (15): polite termination request — process can catch it and clean up. SIGKILL (9): force kill — cannot be caught or ignored."},
+{m:"OS",q:"What does 'lseek()' system call do?",o:["Creates new file","Repositions file offset (seek position)","Links files","Locks file"],a:1,tip:"lseek = reposition file offset",e:"lseek(fd, offset, whence) repositions the file offset for the next read/write. SEEK_SET=from start, SEEK_CUR=from current, SEEK_END=from end."},
+{m:"OS",q:"IPC message queues allow processes to:",o:["Share memory directly","Send structured messages to a kernel-managed queue","Create child processes","Access hardware ports"],a:1,tip:"Message queue: structured messages",e:"Message queues: kernel-managed queue where processes post/receive typed messages. More structured than pipes; messages can be received by type."},
+{m:"OS",q:"What is the purpose of the OS file system?",o:["Manage CPU scheduling","Organize and manage persistent data storage (files, directories, permissions)","Handle interrupts","Manage RAM allocation"],a:1,tip:"File system = persistent storage management",e:"File system organizes data on storage devices into files and directories, manages allocation, permissions, metadata (inodes), and provides APIs."},
+
+// ── MCU & RISC-V (50) ──
+{m:"MCU",q:"How many general-purpose registers does ARM Cortex-M have (R0–R12)?",o:["8","10","13","16"],a:2,tip:"Cortex-M: R0–R12 = 13 GPRs",e:"ARM Cortex-M has R0–R12 (13 GPRs) + R13(SP) + R14(LR) + R15(PC) + xPSR = 17 registers total. R0–R12 are general-purpose."},
+{m:"MCU",q:"What is NVIC in ARM Cortex-M?",o:["Memory controller","Nested Vectored Interrupt Controller — manages interrupt priorities and nesting","Clock generator","Debug interface"],a:1,tip:"NVIC manages interrupts",e:"NVIC handles interrupt enable/disable, priority levels, pending status, and supports nested interrupts (higher priority can preempt lower)."},
+{m:"MCU",q:"What is SysTick timer used for?",o:["PWM generation","UART baud rate generation","Periodic OS tick interrupt for RTOS","Watchdog reset"],a:2,tip:"SysTick = OS tick timer",e:"SysTick is a 24-bit down-counter generating periodic interrupts. Used by RTOS (FreeRTOS, etc.) for task scheduling tick."},
+{m:"MCU",q:"What is bit-banding in ARM Cortex-M?",o:["Compress memory","Map each peripheral/SRAM bit to unique 32-bit word for atomic bit access","Speed up DMA","Encrypt memory"],a:1,tip:"Bit-banding = atomic bit access",e:"Bit-banding aliases each bit in SRAM/peripheral space to its own 32-bit word. Writing 1/0 to the alias atomically sets/clears the bit — no race conditions."},
+{m:"MCU",q:"SPI uses how many wires for full-duplex?",o:["2","3","4","1"],a:2,tip:"SPI: 4 wires (SCLK,MOSI,MISO,CS)",e:"SPI: SCLK (clock), MOSI (Master Out Slave In), MISO (Master In Slave Out), CS/SS (Chip Select). Full-duplex simultaneous send/receive."},
+{m:"MCU",q:"Standard I2C supports up to how many devices (7-bit address)?",o:["16","64","128 (112 usable)","256"],a:2,tip:"I2C 7-bit: 128 addresses",e:"7-bit I2C addressing: 2^7=128 addresses. Some are reserved (0x00, 0x78–0x7F), leaving ~112 usable device addresses."},
+{m:"MCU",q:"PWM (Pulse Width Modulation) controls:",o:["Digital logic levels only","Analog devices by varying duty cycle of square wave","Clock frequency","Interrupt priority"],a:1,tip:"PWM: duty cycle control",e:"PWM varies the ON-time percentage (duty cycle) of a square wave. 0% duty=fully off, 100%=fully on, 50%=half power. Used for motor control, LED brightness, DAC."},
+{m:"MCU",q:"What is the Interrupt Vector Table (IVT)?",o:["RAM data table","Array of handler function addresses at start of memory, indexed by exception number","Register file","DMA descriptor list"],a:1,tip:"IVT = array of handler addresses",e:"The vector table is an array at the start of flash (or RAM). Each entry is the address of the corresponding interrupt/exception handler (ISR)."},
+{m:"MCU",q:"In UART, what does TX stand for?",o:["Transfer Register","Transmit — pin that sends data","Terminal eXchange","Time eXtension"],a:1,tip:"UART TX = transmit",e:"UART TX (Transmit) sends data as serial bits. RX (Receive) receives data. UART is asynchronous — no shared clock, baud rates must match."},
+{m:"MCU",q:"DMA (Direct Memory Access) is used to:",o:["Perform arithmetic operations","Transfer data between memory/peripherals without CPU involvement","Generate clock signals","Manage power modes"],a:1,tip:"DMA: CPU-free data transfer",e:"DMA controller handles data transfers autonomously. CPU sets up the transfer and is free for other tasks. Used for UART, ADC, SPI, USB bulk transfers."},
+{m:"MCU",q:"What resets the MCU if software doesn't periodically kick it?",o:["RTC timer","ADC timeout","Watchdog Timer (WDT)","SysTick"],a:2,tip:"Watchdog timer detects hangs",e:"Watchdog Timer: software must 'kick' (refresh) it within a timeout period. If it expires, WDT resets the MCU. Detects software hangs/crashes."},
+{m:"MCU",q:"RISC-V privilege modes from highest to lowest?",o:["User→Supervisor→Machine","Machine→Supervisor→User","Hypervisor→Machine→User","Ring0→Ring1→Ring2"],a:1,tip:"RISC-V: M > S > U",e:"RISC-V: Machine mode (M) = highest, Supervisor (S) = OS kernel, User (U) = applications. All implementations must have M-mode."},
+{m:"MCU",q:"RISC-V register x0 (zero) always contains:",o:["Stack pointer","Return address","Hardwired zero — reads always 0, writes ignored","Scratch value"],a:2,tip:"RISC-V x0 = hardwired zero",e:"x0 is hardwired to 0 in RISC-V. Any write to x0 is discarded. Used for no-ops (ADDI x0,x0,0) and discarding results."},
+{m:"MCU",q:"C-DAC VEGA processor is based on which ISA?",o:["ARM Cortex-A","RISC-V","MIPS","x86"],a:1,tip:"VEGA = RISC-V based",e:"C-DAC's VEGA processor family is indigenously designed by India and based on the open RISC-V instruction set architecture."},
+{m:"MCU",q:"What does GPIO stand for?",o:["General Processing I/O","General Purpose Input/Output","Global Port Interface Operations","Graphics Peripheral I/O"],a:1,tip:"GPIO = General Purpose I/O",e:"GPIO pins can be configured as digital inputs (read buttons, sensors) or digital outputs (drive LEDs, relays) under software control."},
+{m:"MCU",q:"ARM Cortex profile for hard real-time applications?",o:["Cortex-A (Application)","Cortex-R (Real-time)","Cortex-M (Microcontroller)","Cortex-X (Extended)"],a:1,tip:"Cortex-R = Real-time profile",e:"Cortex-R: deterministic, low-latency response for hard real-time (automotive ABS, hard disk controllers). Cortex-A: high-performance OS. Cortex-M: microcontrollers."},
+{m:"MCU",q:"What is CMSIS?",o:["Compiler optimization","Cortex Microcontroller Software Interface Standard — standardized ARM Cortex-M hardware APIs","Debug protocol","Circuit simulation tool"],a:1,tip:"CMSIS = ARM standardized APIs",e:"CMSIS provides standardized startup code, register definitions, DSP library, RTOS APIs for ARM Cortex-M. Improves code portability across vendors."},
+{m:"MCU",q:"I2C Fast Mode speed is:",o:["100 kbps","400 kbps","1 Mbps","10 Mbps"],a:1,tip:"I2C: Standard=100k, Fast=400k",e:"I2C speeds: Standard=100kbps, Fast Mode=400kbps, Fast Mode+=1Mbps, High Speed=3.4Mbps."},
+{m:"MCU",q:"PendSV exception in Cortex-M is used for:",o:["Hard fault handling","RTOS context switching (lowest-priority exception, pended by OS)","DMA completion","Timer overflow"],a:1,tip:"PendSV = RTOS context switch",e:"PendSV runs at lowest priority, after all ISRs complete. RTOS uses it for context switches — ensuring task switching doesn't interrupt other ISRs."},
+{m:"MCU",q:"RISC-V ECALL instruction does what?",o:["External hardware interrupt","System call — transfers control to higher privilege mode","Memory fence (ordering)","Branch instruction"],a:1,tip:"ECALL = system call in RISC-V",e:"ECALL generates an environment call exception, transferring to M-mode (or S-mode). Used by U-mode applications to request OS services."},
+{m:"MCU",q:"ADC (Analog to Digital Converter) converts:",o:["Analog voltage to digital binary number","Digital to analog","AC power to DC","Address to data"],a:0,tip:"ADC: analog → digital",e:"ADC samples analog voltage, compares against reference, outputs n-bit digital value. Resolution = 2^n levels. E.g., 12-bit ADC: 0–4095."},
+{m:"MCU",q:"ARM register R14 is the:",o:["Stack Pointer","Link Register — stores return address for function calls","Program Counter","General scratch register"],a:1,tip:"R14 = LR (Link Register)",e:"When BL/BLX branches, R14 (LR) automatically stores PC+4 (return address). At function end, BX LR jumps back to caller."},
+{m:"MCU",q:"What does MPU (Memory Protection Unit) do?",o:["Speed up memory access","Define memory regions with access permissions to prevent unauthorized access","Encrypt memory contents","Expand RAM size"],a:1,tip:"MPU: memory region protection",e:"MPU defines up to 8 regions with configurable permissions (read/write/execute, privileged/unprivileged). Prevents tasks from corrupting each other's memory."},
+{m:"MCU",q:"CAN bus is primarily used in:",o:["Consumer home electronics","Automotive/industrial real-time control networks","Home WiFi","USB peripheral connections"],a:1,tip:"CAN bus: automotive/industrial",e:"CAN (Controller Area Network) is robust against EMI, supports multi-master, uses differential signaling. Standard in automotive (ECUs) and industrial automation."},
+{m:"MCU",q:"RISC-V U-type instruction format is used for:",o:["Register-register ops (R-type)","Loads/stores","Instructions with 20-bit immediate (LUI, AUIPC)","Branch instructions"],a:2,tip:"U-type: 20-bit immediate",e:"U-type has a 20-bit immediate field. LUI (Load Upper Immediate) loads 20-bit immediate into upper 20 bits of register. AUIPC adds it to PC."},
+{m:"MCU",q:"Difference between Sleep and Stop low-power modes (STM32)?",o:["Same power consumption","Sleep halts CPU only; Stop halts CPU+clocks, deeper power saving","Stop is lighter than Sleep","Sleep shuts off all peripherals"],a:1,tip:"Sleep vs Stop power modes",e:"Sleep: CPU halted, peripherals run, fast wake-up. Stop: CPU + most clocks off, much lower power but longer wake-up latency. Standby is deepest (RAM lost)."},
+{m:"MCU",q:"SVCall (SVC) exception in Cortex-M is used for:",o:["Stack violation error","Supervisor Call — allows unprivileged code to request privileged OS services","Speed violation","Segment violation"],a:1,tip:"SVC = embedded system call",e:"SVC (Supervisor Call) is triggered by SVC instruction. Allows RTOS tasks (unprivileged) to call OS APIs (privileged) safely — the embedded equivalent of system calls."},
+{m:"MCU",q:"SPI communication mode is determined by:",o:["Baud rate only","CPOL (clock polarity) and CPHA (clock phase) settings","CS pin polarity only","Data frame size"],a:1,tip:"SPI modes: CPOL + CPHA",e:"4 SPI modes: CPOL=0/1 (clock idle low/high) × CPHA=0/1 (sample on 1st/2nd edge). Both master and slave must use same mode."},
+{m:"MCU",q:"SFR (Special Function Register) area contains:",o:["User application code","Peripheral control/status registers (GPIO, UART, ADC, DMA, timers)","OS kernel data","DMA buffers"],a:1,tip:"SFRs = peripheral registers",e:"SFRs are memory-mapped registers controlling on-chip peripherals. Writing to GPIOA_ODR register (SFR) directly drives GPIO pins."},
+{m:"MCU",q:"RISC-V NOP is implemented as:",o:["Special NOP opcode","ADDI x0, x0, 0 (add 0 to x0, discard result)","MOV x0, x0","HALT instruction"],a:1,tip:"RISC-V NOP = ADDI x0,x0,0",e:"RISC-V has no dedicated NOP. Standard NOP is ADDI x0, x0, 0 — writes to x0 (discarded), no side effects, takes one cycle."},
+{m:"MCU",q:"What is RTC (Real Time Clock) used for?",o:["CPU task scheduling","Maintaining current date/time even when main power off (battery backed)","Generating random numbers","Managing flash memory wear"],a:1,tip:"RTC = always-on clock",e:"RTC uses a low-power oscillator (32.768 kHz crystal) to keep accurate time. Runs on backup battery (coin cell) when main power is off."},
+{m:"MCU",q:"In ARM Cortex-M, exception number 1 is:",o:["External IRQ 0","SysTick","Reset","HardFault"],a:2,tip:"Exception 1 = Reset",e:"Cortex-M exception numbers: 1=Reset, 2=NMI, 3=HardFault, 4=MemManage, 5=BusFault, 6=UsageFault, 11=SVCall, 14=PendSV, 15=SysTick, 16+=External IRQs."},
+{m:"MCU",q:"What is the purpose of MOSI in SPI?",o:["Clock signal","Master Out Slave In — data from master to slave","Master In Slave Out","Memory Output Serial Interface"],a:1,tip:"MOSI: master transmit",e:"MOSI (Master Out Slave In) carries data FROM the master TO the slave. MISO goes the other way. Both are clocked by SCLK."},
+{m:"MCU",q:"How does I2C address a specific slave device?",o:["By pin number","By sending 7-bit (or 10-bit) address on SDA after START condition","By clock frequency","By separate chip-select pin"],a:1,tip:"I2C: address over SDA",e:"I2C uses only 2 wires (SDA, SCL). Master sends START then 7-bit slave address + R/W bit. Slave with matching address responds with ACK."},
+{m:"MCU",q:"What is the Cortex-M HardFault exception?",o:["Normal system call","Catch-all fault for unhandled faults (bus fault, usage fault, memory fault)","Power failure handler","External interrupt"],a:1,tip:"HardFault = catch-all error",e:"HardFault triggers when another fault (BusFault, MemFault, UsageFault) cannot be handled (disabled or occurs during fault handling). It's the embedded equivalent of a kernel panic."},
+{m:"MCU",q:"RISC-V base integer ISA has how many general-purpose registers?",o:["16","32","64","8"],a:1,tip:"RISC-V: 32 registers (x0–x31)",e:"RISC-V has 32 integer registers x0–x31. x0=hardwired zero, x1=ra (return address), x2=sp (stack pointer), etc."},
+{m:"MCU",q:"What does the ARM instruction BL do?",o:["Branch unconditionally","Branch with Link — calls function and stores return address in LR (R14)","Branch if less","Branch long distance only"],a:1,tip:"BL = branch and link (call)",e:"BL (Branch with Link) jumps to a function AND saves PC+4 into LR (R14). At function end, BX LR returns to caller."},
+{m:"MCU",q:"Which low-power mode in STM32 retains RAM content?",o:["Standby (RAM lost)","Sleep mode (RAM retained)","Stop mode (RAM retained)","Both Sleep and Stop retain RAM"],a:3,tip:"Sleep and Stop retain RAM",e:"Sleep mode: CPU off, RAM+peripherals on. Stop mode: CPU+clocks off, RAM retained (SRAM values preserved). Standby: deepest, SRAM lost except backup domain."},
+{m:"MCU",q:"What is RISC-V's FENCE instruction used for?",o:["Physical fence around memory","Memory ordering — ensures previous memory ops complete before subsequent ones","Branch prediction","Cache flush"],a:1,tip:"FENCE: memory ordering barrier",e:"FENCE ensures ordering between memory operations. In multicore or I/O scenarios, prevents reordering that could cause consistency issues."},
+{m:"MCU",q:"DAC (Digital to Analog Converter) does what?",o:["Analog to digital conversion","Converts digital binary value to analog voltage","DC to AC conversion","Debug to application conversion"],a:1,tip:"DAC: digital → analog",e:"DAC converts an n-bit digital value to a corresponding analog voltage. E.g., 12-bit DAC with 3.3V reference: output = (value/4096) × 3.3V."},
+{m:"MCU",q:"What is the function of the ARM Cortex-M stack pointer (R13/SP)?",o:["Stores return address","Points to top of current stack (used for local variables and function calls)","Stores program counter","Points to interrupt table"],a:1,tip:"SP points to stack top",e:"SP (Stack Pointer, R13) always points to the top of the current stack. PUSH decrements SP then stores, POP loads then increments SP."},
+{m:"MCU",q:"In RISC-V, which register is the conventional stack pointer?",o:["x0","x1 (ra)","x2 (sp)","x31"],a:2,tip:"RISC-V x2 = stack pointer",e:"By RISC-V ABI convention: x2=sp (stack pointer), x1=ra (return address), x10-x11=function return values, x10-x17=function arguments."},
+{m:"MCU",q:"What is the purpose of the ARM Cortex-M VTOR register?",o:["Vector Table Relocation Register — sets base address of interrupt vector table","Voltage regulator","Virtual Timeout Register","Vector Trigger Offset Register"],a:0,tip:"VTOR relocates vector table",e:"VTOR (Vector Table Offset Register) allows relocating the vector table to any 512-byte aligned address in flash or RAM. Used by bootloaders."},
+{m:"MCU",q:"Which peripheral generates PWM in an ARM MCU?",o:["ADC","UART","Timer (TIM) configured in PWM mode","DMA"],a:2,tip:"Timer generates PWM",e:"General-purpose timers (TIM2, TIM3 etc.) in PWM mode compare counter value against capture-compare register to generate PWM with configurable frequency and duty cycle."},
+]; // end BANK
+
+// ═══════════════════ CORE LOGIC ═══════════════════
+const MC = {EC:'var(--ec)',DSA:'var(--dsa)',OS:'var(--os)',MCU:'var(--mcu)'};
+let uName='', uMod='ALL', qs=[], ans=[], choices={}, curQ=0, tmr=null, tLeft=0, tStart=0, dotFilter='ALL';
+
+// ── Screen management ──
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>{
+    s.classList.remove('active');
+    s.style.display='none';
+  });
+  const el=document.getElementById(id);
+  el.style.display=(id==='s-exam')?'grid':'flex';
+  el.classList.add('active');
+}
+
+// ── Syntax highlight ──
+function hl(code){
+  return code
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/(\/\/[^\n]*)/g,'<span class="cmt">$1</span>')
+    .replace(/(#\w+)/g,'<span class="pp">$1</span>')
+    .replace(/\b(int|char|float|double|void|return|if|else|while|for|do|printf|scanf|struct|typedef|enum|switch|case|break|continue|default|unsigned|signed|static|extern|volatile|const|auto|register|sizeof|NULL)\b/g,'<span class="kw">$1</span>')
+    .replace(/"([^"]*)"/g,'<span class="str">"$1"</span>')
+    .replace(/\b(\d+(?:\.\d+)?)\b/g,'<span class="num">$1</span>');
+}
+
+// ── Fisher-Yates shuffle ──
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+// ── LANDING ──
+function initLanding(){
+  const lb=JSON.parse(localStorage.getItem('cdac_lb_v5')||'[]');
+  document.getElementById('kpi-attempts').textContent=lb.length;
+}
+
+document.getElementById('btn-proceed').addEventListener('click',()=>{
+  const n=document.getElementById('inp-name').value.trim();
+  if(!n){alert('Please enter your name first!');return;}
+  uName=n; uMod=document.getElementById('inp-mod').value;
+  showScreen('s-instr');
+});
+
+document.getElementById('btn-start').addEventListener('click',startExam);
+document.getElementById('btn-prev').addEventListener('click',()=>navQ(-1));
+document.getElementById('btn-next').addEventListener('click',()=>navQ(1));
+document.getElementById('btn-skip').addEventListener('click',skipQ);
+document.getElementById('btn-submit').addEventListener('click',confirmSubmit);
+document.getElementById('btn-retry').addEventListener('click',()=>{showScreen('s-land');initLanding();});
+document.getElementById('btn-home').addEventListener('click',()=>{showScreen('s-land');initLanding();});
+document.getElementById('btn-clrlb').addEventListener('click',()=>{if(confirm('Clear leaderboard?')){localStorage.removeItem('cdac_lb_v5');renderLB();}});
+document.querySelectorAll('.mf-btn').forEach(b=>b.addEventListener('click',()=>filterDots(b.dataset.m)));
+
+function startExam(){
+  qs = uMod==='ALL' ? shuffle(BANK) : shuffle(BANK.filter(q=>q.m===uMod));
+  // Randomize answer positions
+  qs = qs.map(q=>{
+    const shuffledOpts=shuffle(q.o);
+    const correct=q.o[q.a]; // get the correct answer text
+    return {...q, o:shuffledOpts, a:shuffledOpts.indexOf(correct)};
+  });
+  ans=new Array(qs.length).fill(null); // null=unanswered
+  choices={};
+  curQ=0;
+  tLeft=(uMod==='ALL'?90:30)*60;
+  tStart=Date.now();
+  document.getElementById('qn-tot').textContent=qs.length;
+  showScreen('s-exam');
+  renderSidebar();
+  renderQ(0);
+  startTimer();
+}
+
+// ── TIMER ──
+function startTimer(){
+  clearInterval(tmr);
+  tmr=setInterval(()=>{
+    tLeft--;
+    const m=String(Math.floor(tLeft/60)).padStart(2,'0');
+    const s=String(tLeft%60).padStart(2,'0');
+    const el=document.getElementById('timer');
+    el.textContent=`${m}:${s}`;
+    el.className='timer'+(tLeft<=120?' danger':tLeft<=300?' warn':'');
+    if(tLeft<=0){clearInterval(tmr);doSubmit();}
+  },1000);
+}
+
+// ── RENDER QUESTION ──
+function renderQ(idx){
+  curQ=idx;
+  const q=qs[idx];
+  document.getElementById('qn-cur').textContent=idx+1;
+  const mb=document.getElementById('qn-mod');
+  mb.textContent=q.m;
+  mb.style.background=MC[q.m]+'22';
+  mb.style.color=MC[q.m];
+  mb.style.border=`1.5px solid ${MC[q.m]}44`;
+
+  const isAnswered = ans[idx]!==null && ans[idx]!=='skipped';
+  const labels=['A','B','C','D'];
+
+  let html=`<div class="q-header">
+    <span class="q-badge" style="color:${MC[q.m]};border-color:${MC[q.m]}33">${q.m} · Q${idx+1}</span>
+  </div>
+  <div class="q-text">${q.q.replace(/\n/g,'<br>')}</div>`;
+
+  if(q.code) html+=`<pre class="code">${hl(q.code)}</pre>`;
+
+  html+=`<div class="opts">`;
+  q.o.forEach((opt,oi)=>{
+    let cls='opt';
+    if(isAnswered){
+      if(oi===q.a) cls+=' correct reveal';
+      else if(choices[idx]===oi) cls+=' wrong';
+      cls+=' disabled';
+    }
+    html+=`<div class="${cls}" onclick="answerQ(${idx},${oi})">
+      <div class="opt-circle">${labels[oi]}</div>
+      <div>${opt}</div>
+    </div>`;
+  });
+  html+=`</div>`;
+
+  if(isAnswered){
+    html+=`<div class="explanation">
+      <div class="exp-title">💡 ${q.tip}</div>
+      ${q.e}
+    </div>`;
+  }
+
+  document.getElementById('q-body').innerHTML=html;
+  document.getElementById('q-body').scrollTop=0;
+  updateDots();
+  updateProgress();
+}
+
+function answerQ(idx,chosen){
+  if(ans[idx]!==null && ans[idx]!=='skipped') return;
+  choices[idx]=chosen;
+  ans[idx]=(chosen===qs[idx].a)?'correct':'wrong';
+  updateScore();
+  renderQ(idx);
+}
+
+function skipQ(){
+  if(ans[curQ]===null) ans[curQ]='skipped';
+  navQ(1);
+}
+
+function navQ(dir){
+  let n=curQ+dir;
+  if(n<0)n=0;
+  if(n>=qs.length)n=qs.length-1;
+  renderQ(n);
+}
+
+function updateScore(){
+  const sc=ans.filter(a=>a==='correct').length;
+  document.getElementById('score-live').textContent=sc;
+}
+
+// ── SIDEBAR ──
+function renderSidebar(){
+  dotFilter='ALL';
+  document.querySelector('.mf-btn[data-m="ALL"]').classList.add('active');
+  updateDots();
+  updateProgress();
+}
+
+function filterDots(m){
+  dotFilter=m;
+  document.querySelectorAll('.mf-btn').forEach(b=>b.classList.toggle('active',b.dataset.m===m));
+  updateDots();
+}
+
+function updateDots(){
+  const grid=document.getElementById('dot-grid');
+  let html='';
+  qs.forEach((q,i)=>{
+    const show=(dotFilter==='ALL'||q.m===dotFilter);
+    let cls='dot';
+    if(!show) cls+=' hide';
+    else if(i===curQ) cls+=' cur';
+    else if(ans[i]==='correct') cls+=' ok';
+    else if(ans[i]==='wrong') cls+=' ng';
+    else if(ans[i]==='skipped') cls+=' sk';
+    html+=`<div class="${cls}" onclick="renderQ(${i})" title="Q${i+1} (${q.m})">${i+1}</div>`;
+  });
+  grid.innerHTML=html;
+}
+
+function updateProgress(){
+  const mods=['EC','DSA','OS','MCU'];
+  const active=qs.map((q,i)=>({q,i})).filter(({q})=>qs.length&&true);
+  let html='';
+  mods.forEach(m=>{
+    const idx=qs.map((_,i)=>i).filter(i=>qs[i].m===m);
+    if(!idx.length)return;
+    const c=idx.filter(i=>ans[i]==='correct').length;
+    const pct=Math.round(c/idx.length*100);
+    html+=`<div class="pr">
+      <span class="pr-lbl" style="color:${MC[m]}">${m}</span>
+      <div class="pr-bar"><div class="pr-fill" style="width:${pct}%;background:${MC[m]}"></div></div>
+      <span class="pr-num">${c}/${idx.length}</span>
+    </div>`;
+  });
+  document.getElementById('prog-rows').innerHTML=html;
+}
+
+// ── SUBMIT ──
+function confirmSubmit(){
+  const unan=ans.filter(a=>a===null).length;
+  if(unan>0){if(!confirm(`${unan} question(s) unanswered. Submit anyway?`))return;}
+  doSubmit();
+}
+
+function doSubmit(){
+  clearInterval(tmr);
+  ans.forEach((_,i)=>{if(ans[i]===null)ans[i]='skipped';});
+  const used=(uMod==='ALL'?90:30)*60-tLeft;
+  showResult(used);
+}
+
+// ── RESULT ──
+function showResult(timeTaken){
+  const correct=ans.filter(a=>a==='correct').length;
+  const wrong=ans.filter(a=>a==='wrong').length;
+  const skipped=ans.filter(a=>a==='skipped').length;
+  const total=qs.length;
+  const pct=Math.round(correct/total*100);
+
+  let emoji,msg;
+  if(pct>=90){emoji='🏆';msg='Outstanding! You are CDAC CCE ready!';}
+  else if(pct>=75){emoji='🥇';msg='Excellent! Great performance!';}
+  else if(pct>=60){emoji='👍';msg='Good work! Keep practicing!';}
+  else if(pct>=40){emoji='📖';msg='Keep studying — you can improve!';}
+  else{emoji='💪';msg='More practice needed. Review each topic!';}
+
+  document.getElementById('r-emoji').textContent=emoji;
+  document.getElementById('r-pct').textContent=pct+'%';
+  document.getElementById('r-msg').textContent=msg;
+  document.getElementById('r-correct').textContent=correct;
+  document.getElementById('r-wrong').textContent=wrong;
+  document.getElementById('r-skip').textContent=skipped;
+  const mm=Math.floor(timeTaken/60), ss=timeTaken%60;
+  document.getElementById('r-time').textContent=`${mm}m${ss}s`;
+
+  // Module breakdown
+  const mods=['EC','DSA','OS','MCU'];
+  let bh='<h3>📊 Module-wise Breakdown</h3>';
+  mods.forEach(m=>{
+    const idx=qs.map((_,i)=>i).filter(i=>qs[i].m===m);
+    if(!idx.length)return;
+    const c=idx.filter(i=>ans[i]==='correct').length;
+    const p=Math.round(c/idx.length*100);
+    bh+=`<div class="mb-row">
+      <div class="mb-top"><span style="color:${MC[m]}">${m} — ${qs.filter(q=>q.m===m).length} Questions</span><span>${c}/${idx.length} · ${p}%</span></div>
+      <div class="mb-bar"><div class="mb-fill" style="width:${p}%;background:${MC[m]}"></div></div>
+    </div>`;
+  });
+  document.getElementById('r-breakdown').innerHTML=bh;
+
+  // Save & render leaderboard
+  saveLB(correct,total,pct,timeTaken);
+  renderLB();
+
+  showScreen('s-result');
+  if(pct>=70) confetti();
+}
+
+// ── LEADERBOARD ──
+function saveLB(score,total,pct,time){
+  let lb=JSON.parse(localStorage.getItem('cdac_lb_v5')||'[]');
+  lb.push({name:uName,score,total,pct,time,mod:uMod,date:new Date().toLocaleDateString('en-IN')});
+  lb.sort((a,b)=>b.pct-a.pct||a.time-b.time);
+  lb=lb.slice(0,50);
+  localStorage.setItem('cdac_lb_v5',JSON.stringify(lb));
+}
+
+function renderLB(){
+  let lb=JSON.parse(localStorage.getItem('cdac_lb_v5')||'[]');
+  if(!lb.length){
+    document.getElementById('r-lb').innerHTML='<h3>🏆 Leaderboard</h3><p style="color:var(--txt3);font-size:.85rem;margin-top:.5rem">No attempts yet. Be the first!</p>';
+    return;
+  }
+  const colors=['#4f9eff','#2ecc71','#f1c40f','#9b59b6','#e67e22','#e74c3c'];
+  const medals=['🥇','🥈','🥉'];
+  const top3=lb.slice(0,3);
+
+  // Podium (2nd, 1st, 3rd order)
+  const podOrder=[top3[1],top3[0],top3[2]];
+  const podHeights=[35,55,20];
+  let ph='<div class="podium">';
+  podOrder.forEach((e,pi)=>{
+    if(!e){ph+=`<div class="pod-slot"></div>`;return;}
+    const rank=lb.indexOf(e);
+    const av=e.name.charAt(0).toUpperCase();
+    const col=colors[rank%6];
+    ph+=`<div class="pod-slot">
+      <span class="pod-medal">${medals[rank]||''}</span>
+      <div class="pod-av" style="background:${col};border-color:${col}">${av}</div>
+      <div class="pod-name">${e.name}</div>
+      <div class="pod-pct">${e.pct}% · ${e.score}/${e.total}</div>
+      <div class="pod-base" style="height:${podHeights[pi]}px;background:${col}33;border-top:2px solid ${col}"></div>
+    </div>`;
+  });
+  ph+='</div>';
+
+  let th=`<table class="lb-table"><thead><tr><th>#</th><th>Name</th><th>Score</th><th>%</th><th>Module</th><th>Date</th></tr></thead><tbody>`;
+  lb.forEach((e,i)=>{
+    const isYou=(e.name===uName);
+    th+=`<tr class="${isYou?'you':''}"><td>${i+1}</td><td>${e.name}${isYou?'<span class="you-tag">YOU</span>':''}</td><td>${e.score}/${e.total}</td><td>${e.pct}%</td><td>${e.mod}</td><td>${e.date}</td></tr>`;
+  });
+  th+=`</tbody></table>`;
+
+  document.getElementById('r-lb').innerHTML='<h3>🏆 Leaderboard</h3>'+ph+th;
+}
+
+// ── CONFETTI ──
+function confetti(){
+  const cols=['#4f9eff','#2ecc71','#f1c40f','#9b59b6','#e67e22','#e74c3c','#fff'];
+  for(let i=0;i<100;i++){
+    const el=document.createElement('div');
+    el.className='cf';
+    const size=6+Math.random()*8;
+    el.style.cssText=`left:${Math.random()*100}vw;top:-20px;width:${size}px;height:${size}px;background:${cols[i%cols.length]};animation-duration:${2.5+Math.random()*3}s;animation-delay:${Math.random()*2.5}s;transform:rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),7000);
+  }
+}
+
+// ── KEYBOARD ──
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('s-exam').classList.contains('active'))return;
+  if(e.key==='ArrowRight')navQ(1);
+  else if(e.key==='ArrowLeft')navQ(-1);
+  else if(['1','2','3','4'].includes(e.key)){
+    const i=parseInt(e.key)-1;
+    if(ans[curQ]===null||ans[curQ]==='skipped')answerQ(curQ,i);
+  }
+});
+
+// Init
+initLanding();
+</script>
+</body>
+</html>
+HTMLEOF
+echo "Done! Size: $(wc -c < /mnt/user-data/outputs/cdac_esd_exam_v2.html) bytes"
+Output
+
+Done! Size: 90869 bytes
